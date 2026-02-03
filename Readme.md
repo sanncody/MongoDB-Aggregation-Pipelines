@@ -307,3 +307,23 @@ db.users.aggregate([
     }
 ]);
 ```
+
+### 10. How many users have a phone number starting with '+1 (940)'?
+
+### Solution:
+
+Used Regex here
+
+```Bash
+db.users.aggregate([
+    {
+      $match: {
+        "company.phone": /^\+1 \(940\) /
+      }
+    },
+    {
+      $count: "noOfUsers"
+    }
+]);
+```
+
