@@ -213,7 +213,7 @@ db.users.aggregate([
 
 ### Solution 1:
 
-Using $unwind operator (3 Step pipeline)
+Using $unwind operator (3-Step pipeline)
 ```Bash
 db.users.aggregate([ 
     { 
@@ -241,7 +241,7 @@ db.users.aggregate([
 
 ### Solution 2:
 
-Using $addFields operator (2 Step pipeline)
+Using $addFields operator (2-Step pipeline)
 ```Bash
 db.users.aggregate([ 
   {
@@ -265,4 +265,23 @@ db.users.aggregate([
     } 
   } 
 ]);
+```
+
+### 8. How many users have 'enim' as one of their tags?
+
+### Solution:
+
+```Bash
+db.users.aggregate(
+    [
+        {
+            $match: {
+                tags: 'enim'
+            }
+        },
+        {
+            $count: 'enimTagCount'
+        }
+    ]
+);
 ```
