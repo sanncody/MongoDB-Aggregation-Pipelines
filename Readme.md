@@ -208,3 +208,32 @@ db.users.aggregate([
     }
 ]);
 ```
+
+### 7. What is the average number of tags per user?
+
+### Solution:
+
+```Bash
+db.users.aggregate([ 
+    { 
+        $unwind: "$tags" 
+    }, 
+    { 
+        $group: { 
+            _id: "$_id", 
+            numberOfTags: { $sum: 1 }, 
+            avgTags: { 
+                $avg: "$tags" 
+            } 
+        } 
+    }, 
+    { 
+        $group: { 
+            _id: null, 
+            avgTags: { 
+                $avg: "$numberOfTags" 
+            }  
+        } 
+    }
+]);
+```
