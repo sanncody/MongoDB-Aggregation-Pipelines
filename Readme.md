@@ -126,6 +126,20 @@ db.users.aggregate([
 ]);
 ```
 
+Calculating average age of all users on the basis of nothing
+```Bash
+db.users.aggregate([ 
+    { 
+        $group: { 
+            _id: null, 
+            avgAge: { 
+                $avg: "$age" 
+            } 
+        } 
+    } 
+]);
+```
+
 ### 3. List the top 5 most common favourite fruits among the users?
 
 ### Solution:
@@ -142,32 +156,7 @@ db.users.aggregate([
     } 
 ]);
 ```
-
-### 4. List the top 5 most common favourite fruits among the users?
-
-### Solution:
-
-```Bash
-db.users.aggregate([ 
-    { 
-      $group: { 
-          _id: "$favoriteFruit", 
-          count: { 
-              $sum: 1 
-        } 
-      } 
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    },
-    {
-      $limit: 5
-    }
-]);
-```
-### 5. Find the total number of males and females as users?
+### 4. Find the total number of males and females as users?
 
 ### Solution:
 
@@ -179,6 +168,28 @@ db.users.aggregate([
         count: {
           $sum: 1
         }
+      }
+    }
+]);
+```
+
+### 5. Which country has the highest number of registered users?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+      $group: {
+        _id: "$company.location.country",
+        numOfUsers: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        numOfUsers: -1
       }
     }
 ]);
