@@ -142,3 +142,44 @@ db.users.aggregate([
     } 
 ]);
 ```
+
+### 4. List the top 5 most common favourite fruits among the users?
+
+### Solution:
+
+```Bash
+db.users.aggregate([ 
+    { 
+      $group: { 
+          _id: "$favoriteFruit", 
+          count: { 
+              $sum: 1 
+        } 
+      } 
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    },
+    {
+      $limit: 5
+    }
+]);
+```
+### 5. Find the total number of males and females as users?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+      $group: {
+        _id: "$gender",
+        count: {
+          $sum: 1
+        }
+      }
+    }
+]);
+```
