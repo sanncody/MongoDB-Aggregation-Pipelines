@@ -211,8 +211,9 @@ db.users.aggregate([
 
 ### 7. What is the average number of tags per user?
 
-### Solution:
+### Solution 1:
 
+Using $unwind operator (3 Step pipeline)
 ```Bash
 db.users.aggregate([ 
     { 
@@ -235,5 +236,33 @@ db.users.aggregate([
             }  
         } 
     }
+]);
+```
+
+### Solution 2:
+
+Using $addFields operator (2 Step pipeline)
+```Bash
+db.users.aggregate([ 
+  {
+    # This $addFields operator adds new field in the document
+    $addFields: {
+      # This 'noOfTags' here is the new fieldName added in the document 
+      noOfTags: {
+      # Used $size operator here to handle the case when in any document this 'tags' are not present
+        $size: { 
+          $ifNull: [ "$tags", [] ] 
+        } 
+      } 
+    } 
+  }, 
+  { 
+    $group: { 
+      _id: null, 
+      avgTags: { 
+        $avg: '$noOfTags' 
+      } 
+    } 
+  } 
 ]);
 ```
