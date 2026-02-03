@@ -194,3 +194,17 @@ db.users.aggregate([
     }
 ]);
 ```
+
+### 6. List all unique eye colors present in the collection?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+      $group: {
+        _id: "$eyeColor"
+      }
+    }
+]);
+```
