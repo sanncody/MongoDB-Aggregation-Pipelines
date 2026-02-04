@@ -327,3 +327,28 @@ db.users.aggregate([
 ]);
 ```
 
+### 10. Which users has registered most recently'?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+        $sort: {
+            registered: -1
+        }
+    },
+    {
+        $limit: 5
+    },
+    {
+        $project: {
+            name: 1,
+            registered: 1,
+            gender: 1,
+            company: 1
+        }
+    }
+]);
+```
+
