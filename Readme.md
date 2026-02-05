@@ -385,3 +385,21 @@ db.users.aggregate([
     }
 ]);
 ```
+### 14. Find users who have both 'enim' and 'id' as their tags?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+        $match: {
+            tags: {
+              $all: [ 'enim', 'id' ]
+            }
+        }
+    },
+    {
+        $count: "Users"
+    }
+]);
+```
