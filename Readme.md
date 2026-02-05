@@ -327,7 +327,7 @@ db.users.aggregate([
 ]);
 ```
 
-### 10. Which users has registered most recently'?
+### 11. Which users has registered most recently?
 
 ### Solution:
 
@@ -352,3 +352,19 @@ db.users.aggregate([
 ]);
 ```
 
+### 12. Categorize users by their favorite fruit?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+  {
+    $group: {
+      _id: "$favoriteFruit",
+      numOfUsers: {
+        $push: "$name"
+      }
+    }
+  }
+]);
+```
