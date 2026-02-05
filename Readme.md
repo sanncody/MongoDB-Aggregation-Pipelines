@@ -397,9 +397,28 @@ db.users.aggregate([
               $all: [ 'enim', 'id' ]
             }
         }
+    }
+]);
+```
+
+### 15. List all the companies located in USA with their corresponding user count?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+        $match: {
+            "company.location.country": "USA"
+        }
     },
     {
-        $count: "Users"
+        $group: {
+            _id: '$company.title',
+            userCount: {
+                $sum: 1
+            }
+        }
     }
 ]);
 ```
