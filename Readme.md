@@ -368,3 +368,20 @@ db.users.aggregate([
   }
 ]);
 ```
+
+### 13. How many users have 'ad' as the second tag in their list of tags?
+
+### Solution:
+
+```Bash
+db.users.aggregate([
+    {
+        $match: {
+            'tags.1': 'ad'
+        }
+    },
+    {
+        $count: "Users"
+    }
+]);
+```
