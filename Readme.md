@@ -422,3 +422,82 @@ db.users.aggregate([
     }
 ]);
 ```
+
+### 16. $lookup operator
+
+Author's Schema
+```JSON
+[
+  {
+    "_id": 100,
+    "name": "F. Scott Fitzgerald",
+    "birth_year": 1896
+  },
+  {
+    "_id": 101,
+    "name": "George Orwell",
+    "birth_year": 1903
+  },
+  {
+    "_id": 102,
+    "name": "Harper Lee",
+    "birth_year": 1926
+  }
+]
+```
+
+Book's Schema
+```JSON
+[
+  {
+    "_id": 1,
+    "title": "The Great Gatsby",
+    "author_id": 100,
+    "genre": "Classic"
+  },
+  {
+    "_id": 2,
+    "title": "Nineteen Eighty-Four",
+    "author_id": 101,
+    "genre": "Dystopian"
+  },
+  {
+    "_id": 3,
+    "title": "To Kill a Mockingbird",
+    "author_id": 102,
+    "genre": "Classic"
+  }
+]
+```
+
+### Definition:
+The $lookup operator in an aggregation pipeline stage allows us to perform a left outer join between two collections.
+
+### Syntax:
+```Bash
+db.<collectionName>.aggregate([
+  {
+    $lookup: {
+      from: "joinedToCollection or Foreign Collection",
+      localField: "field_id of local collection",
+      foreignField: "field_id of foreign collection",
+      as: "New_field_Name in local collection as key"
+    }
+  }
+])
+```
+
+### Applying with books as local_collection and authors as foreign_collection under Library Database
+
+```Bash
+db.books.aggregate([
+  {
+    $lookup: {
+        from: "authors",
+        localField: "author_id",
+        foreignField: "_id",
+        as: "book_author_details"
+    }
+  }
+]);
+```
